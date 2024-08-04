@@ -14,7 +14,7 @@ export function CreateTodo({ createNewTodo }: NewData) {
 
     return (
         <>
-            <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} />
+            <Button label="Add New" icon="pi pi-plus" onClick={() => setVisible(true)} />
             <Dialog 
                 header="New Todo" 
                 visible={visible} 
@@ -27,12 +27,13 @@ export function CreateTodo({ createNewTodo }: NewData) {
                         <label htmlFor="title">Title</label>
                         <InputText 
                             id="title" 
+                            name="title"
                             placeholder="'take out the trash'"
                         />
                     </div>
                     <div className="flex gap-2 justify-end">
                         <Button label="Cancel" icon="pi pi-times" onClick={() => setVisible(false)} className="p-button-text" />
-                        <Button type ="submit" label="Create" icon="pi pi-check" autoFocus />
+                        <Button type ="submit" label="Create" icon="pi pi-check" onClick={() => setVisible(false)} autoFocus />
                     </div>
                 </form>
             </Dialog>
