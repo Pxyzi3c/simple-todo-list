@@ -7,6 +7,8 @@ function getTodos() {
     return prisma.todo.findMany()
 }
 
+// TODO: Add toast for success and error messages
+
 async function toggleTodo(id: string, title: string, complete: boolean) {
     "use server"
 
