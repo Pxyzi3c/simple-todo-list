@@ -1,7 +1,10 @@
 "use client"
 
 import { useState } from "react"
-
+import { Checkbox } from 'primereact/checkbox';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+        
 type TodoItemProps = {
     id: string
     title: string
@@ -12,6 +15,7 @@ type TodoItemProps = {
 export function TodoItem({ id, title, complete, toggleTodo }: TodoItemProps)  {
     const [isEditing, setIsEditing] = useState(false)
     const [editedTitle, setEditedTitle] = useState(title)
+    const [checked, setChecked] = useState(complete)
 
     const onItemTitleChange = (id: string, title: string, complete: boolean) => {
         setIsEditing(false)
@@ -19,31 +23,34 @@ export function TodoItem({ id, title, complete, toggleTodo }: TodoItemProps)  {
         setEditedTitle(title)
     }
 
+    const onCheckboxChange = (id: string, title: string, complete: any) => {
+        toggleTodo(id, title, complete)
+        setChecked(complete)
+    }
+
     return (
         <li className="flex gap-2 items-center">
-            <input 
-                id={id} 
-                type="checkbox" 
-                className="cursor-pointer peer"
-                defaultChecked={complete} 
-                onChange={e => toggleTodo(id, title, e.target.checked)}
-            />
+            <Checkbox 
+                id={id}
+                onChange={e => onCheckboxChange(id, title, e.checked)}
+                checked={checked}
+            ></Checkbox>
             {isEditing ? (
                 <>
-                    <input
-                        id={id} 
-                        type="text"
-                        className="border border-slate-300 bg-transparent rounded px-2 py-1 outline-none focus-within:border-slate-100" 
-                        defaultValue={title}
+                    <InputText 
+                        id={id}
+                        value={editedTitle}
+                        onChange={e => setEditedTitle(e.target.value)}
                         onBlur={e => onItemTitleChange(id, e.target.value, complete)}
+                        placeholder="'take out the trash'"
                     />
-                    <button
-                        type="button"
-                        className="border border-slate-300 text-slate-300 px-2 py-1 rounded horver:bg-slate-700 focus-within:bg-slate-700 outline-none"
+                    <Button 
+                        label="Cancel" 
+                        icon="pi pi-times" 
+                        severity="danger"
+                        outlined
                         onClick={() => setIsEditing(false)}
-                    >
-                        Cancel
-                    </button>
+                    />
                 </>
             ) : (
                 <label 

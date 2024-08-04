@@ -1,7 +1,10 @@
 import { TodoItem } from "@/src/components/TodoItem";
+import { CreateTodo } from "@/src/components/CreateTodo";
+
 import { prisma } from "./db";
 import Link from "next/link";
-
+import { Button } from 'primereact/button';
+        
 function getTodos() {
     return prisma.todo.findMany()
 }
@@ -15,6 +18,12 @@ async function toggleTodo(id: string, title: string, complete: boolean) {
     })
 }
 
+async function createNewTodo(data: FormData) {
+    "use server"
+    console.log("DUMAADAAAAAAAANNNN NAMANNNNN")
+    console.log(data)
+}
+
 export default async function Home() {
     const todos = await getTodos()
 
@@ -22,7 +31,10 @@ export default async function Home() {
         <>
             <header className="flex justify-between items-center mb-4">
                 <h1 className="text-3xl">Todos</h1>
-                <Link className="border border-slate-300 text-slate-300 px-2 py-1 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none" href="/new">New</Link>
+                <Link href="/new">
+                    <Button label="New" icon="pi pi-plus" />
+                </Link>
+                <CreateTodo createNewTodo={createNewTodo}/>
             </header>
             <ul className="pl-4 flex flex-col gap-4">
                 {todos.map(todo => (

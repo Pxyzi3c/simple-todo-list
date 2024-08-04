@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { prisma } from "../db";
 import { redirect } from "next/navigation";
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
 
 async function createTodo(data: FormData) {
     "use server"
@@ -25,24 +27,24 @@ export default function Page() {
                 <h1 className="text-2xl">New</h1>
             </header>
             <form action={createTodo} className="flex gap-2 flex-col">
-                <input 
-                    type="text"
+                <InputText 
                     name="title"
-                    className="border border-slate-300 bg-transparent rounded px-2 py-1 outline-none focus-within:border-slate-100" 
+                    placeholder="'take out the trash'"
                 />
                 <div className="flex gap-1 justify-end">
-                    <Link 
-                        href=".."
-                        className="border border-slate-300 text-slate-300 px-2 py-1 rounded horver:bg-slate-700 focus-within:bg-slate-700 outline-none"
-                    >
-                        Cancel
+                    <Link href="..">
+                        <Button 
+                            label="Cancel"
+                            icon="pi pi-times"
+                            outlined
+                            severity="danger"
+                        />
                     </Link>
-                    <button
+                    <Button 
                         type="submit"
-                        className="border border-slate-300 text-slate-300 px-2 py-1 rounded horver:bg-slate-700 focus-within:bg-slate-700 outline-none"
-                    >
-                        Create
-                    </button>
+                        label="Create" 
+                        icon="pi pi-check"
+                    />
                 </div>
             </form>
         </>
